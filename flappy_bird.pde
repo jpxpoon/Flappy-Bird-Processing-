@@ -29,6 +29,7 @@ float block_range = 100;
 float speed = 3;
 int rot_down = -30;
 float refresh = -30;
+
 /**************INITIALIZE GLOBAL VARS END***************************/
 
 /**************FUNCTION NAMES********************************
@@ -53,7 +54,7 @@ void setup()
  /*I DO NOT TAKE CREDIT FOR THE CREATION OF PHOTOS, WERE FOUND ON THE INTERNET*/
  bird = loadImage("bird.png");//load image into object bird
  land = loadImage("bg.png");//load background image to flappy bird
- 
+  
  /*RESIZE IMAGES TO FIT*/
  bird.resize(60,60);//resize to size that I desire
  land.resize(500,500);
@@ -62,6 +63,9 @@ void setup()
 void draw()
 {
   background(255);
+  if(game_started == false) {
+    rot_down = 0;
+  }
   if(game_flag)//true by default, when hit block will be false
   {
     game();
@@ -104,10 +108,11 @@ void game()
   textSize(32);
   text(GameScore,50,50);
   
+  
   if(bird_flag_up) {
     pushMatrix();// save drawing state
     imageMode(CENTER);
-    translate(bird_x,bird_y);
+    translate(bird_x, bird_y);
     rotate(radians(rot_down));
     image(bird,0,0);
     popMatrix();//restore to original drawing state
@@ -115,7 +120,7 @@ void game()
     
   if(!bird_flag_up) {
     if(rot_down < 40)
-      rot_down+=2;
+      rot_down+=1;
     pushMatrix();
     imageMode(CENTER);
     translate(bird_x,bird_y);
@@ -183,8 +188,8 @@ void game()
 
 void drawBlocks()
 {
-  fill(0,255,0);
-  
+    fill(0,255,0);
+ 
     rect(rect_x, 0, 30, rect_y_top, 0,0, 7,7);
     rect(rect_x, 500, 30, rect_y_bottom, 7,7, 0,0);
     bird_offset = 500 + rect_y_bottom;
@@ -205,9 +210,15 @@ void randomBlockPosition()
 /* If user clicks a mouse and game is in session then move the bird up */
 void mouseClicked()
 {
-  bird_y+= -30;
+  if (!game_started) {
+    game_started = true;
+  }
+  
+  bird_y -= up_value;
   bird_flag_up = true; //will make game() draw bird going up
+  
 }
+
 
 void keyPressed()
 {//if user presses user key up, the bird will fly up
@@ -220,7 +231,9 @@ void keyPressed()
       game_started = true;
       rot_down = -30;
     }
-  }  
+  }
+  
+  game_started = true;
 }
 
 void keyReleased()
@@ -228,11 +241,13 @@ void keyReleased()
   if(key == CODED)//detect special character
     if(keyCode == UP)
       bird_flag_up = false; 
+  
+  
 }
 
 void mouseReleased()
 {//bird will now start going down
- // bird_flag_up = false; //will make game() draw bird going down
+  //bird_flag_up = false; //will make game() draw bird going down
 }
 
 /*This Function will check when called if the bird collided with the squares*/
