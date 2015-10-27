@@ -2,7 +2,6 @@
 HW6
 ECS12 Project
 */
-
 /**************INITIALIZE GLOBAL VARS*******************************/
 int GameScore = 0;
 PImage bird;
