@@ -51,8 +51,8 @@ void setup()
  size(500,500); 
  
  /*I DO NOT TAKE CREDIT FOR THE CREATION OF PHOTOS, WERE FOUND ON THE INTERNET*/
- bird = loadImage("/Users/jonathanpoon/Desktop/bird.png");//load image into object bird
- land = loadImage("/Users/jonathanpoon/Desktop/bg.png");//load background image to flappy bird
+ bird = loadImage("bird.png");//load image into object bird
+ land = loadImage("bg.png");//load background image to flappy bird
  
  /*RESIZE IMAGES TO FIT*/
  bird.resize(60,60);//resize to size that I desire
